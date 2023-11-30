@@ -28,3 +28,8 @@ Route::get('/hallo', function() {
 Route::get('/greet/{name}', function($name) {
     return $name;
 });
+
+//Si aucune route n'a été trouvée, ça redirige vers une page par défaut
+Route::fallback(function() {
+    return 'Still got somewhere';
+});
