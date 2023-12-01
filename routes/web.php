@@ -17,8 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('homepage');
 
-Route::get('/hello', function() {
-    return 'Hello!';
+Route::get('/hello/{name?}', function($name = null) {
+    return view('index',[
+        'name'=>$name
+    ]);
 })->name('hello');
 
 Route::get('/hallo', function() {
