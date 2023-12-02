@@ -11,16 +11,12 @@
     <body>
         @section('title', 'List of tasks')
             
+        <a href="{{ route('create') }}">Create a new task</a>
+
         @section('content')
             @forelse ($tasks as $task)
                 <div>
-                    {{ $task->id }}
                     <a href="{{ route('tasks.show', ['id'=>$task->id]) }}">{{ $task->title }}</a>
-                    {{ $task->description }}
-                    {{ $task->long_description }}
-                    {{ $task->completed }}
-                    {{ $task->created_at }}
-                    {{ $task->updated_at }}
                 </div>
             @empty
                 No tasks
