@@ -25,6 +25,9 @@ Route::get('/', function() {
 
 Route::view('/task/create', 'create')->name('create');
 
+Route::view('/task/create', 'create')->name('create');
+
+
 Route::post('/tasks', function(Request $request){
     /*Si la validation ne passe pas, alors laravel  va rediriger l'utilisateur
     vers la page précédente et envoyer un object appelé errors afin que l'on puisse
@@ -41,7 +44,8 @@ Route::post('/tasks', function(Request $request){
     $task->long_description = $data['long_description'];
     $task->save();
 
-    return redirect()->route('tasks.show', ['id'=>$task->id]);
+    return redirect()->route('tasks.show', ['id'=>$task->id])
+        ->with('success', 'Task created successfully!');
 
 })->name('tasks.store');
 
@@ -52,6 +56,31 @@ Route::get('/task/{id}', function (int $id) {
         'task' => \App\Models\Task::findOrFail($id)
     ]);
 })->name('tasks.show');
+
+Route::get('/task/{id}/edit', function (int $id) {
+    //$task = collect($tasks)->firstWhere('id','=',$id);
+    return view('edit', [
+        'task' => \App\Models\Task::findOrFail($id)
+    ]);
+})->name('tasks.edit');
+
+Route::put('/tasks/{id}', function (int $id, Request $request) {
+    $data = $request->validate([
+        'title' => 'required|max:255',
+        'description' => 'required',
+        'long_description' => 'required',
+    ]);
+
+    $task = Task::findOrFail($id);
+    $task->title = $data['title'];
+    $task->description = $data['description'];
+    $task->long_description = $data['long_description'];
+    $task->save();
+
+    return redirect()->route('tasks.show', ['id'=>$task->id])
+        ->with('success', 'Task edited successfully!');
+})->name('tasks.update');
+
 
 
 
