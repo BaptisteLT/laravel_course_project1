@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function() {
     return view('index', [
-        'tasks' => \App\Models\Task::latest()/*->where('completed',false)*/->get()
+        'tasks' => \App\Models\Task::latest()/*->where('completed',false)*/->paginate(10)
     ]);
 })->name('tasks.index');
 
