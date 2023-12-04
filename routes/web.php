@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Requests\TaskRequest;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,15 +29,11 @@ Route::view('/task/create', 'create')->name('create');
 Route::view('/task/create', 'create')->name('create');
 
 
-Route::post('/tasks', function(Request $request){
+Route::post('/tasks', function(TaskRequest $request){
     /*Si la validation ne passe pas, alors laravel  va rediriger l'utilisateur
     vers la page précédente et envoyer un object appelé errors afin que l'on puisse
     les afficher sur la page par la suite*/
-    $data = $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-        'long_description' => 'required',
-    ]);
+    $data = $request->validated();
 
     $task = new Task;
     $task->title = $data['title'];
@@ -64,12 +61,8 @@ Route::get('/task/{task}/edit', function (Task $task) {
     ]);
 })->name('tasks.edit');
 
-Route::put('/tasks/{task}', function (Task $task, Request $request) {
-    $data = $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-        'long_description' => 'required',
-    ]);
+Route::put('/tasks/{task}', function (Task $task, TaskRequest $request) {
+    $data = $request->validated();
 
     $task->title = $data['title'];
     $task->description = $data['description'];
