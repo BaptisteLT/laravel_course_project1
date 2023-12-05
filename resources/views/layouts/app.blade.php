@@ -3,20 +3,23 @@
 
     <head>
         <title>Laravel 10 Task List App</title>
+        <script src="https://cdn.tailwindcss.com"></script>
         @yield('styles')
     </head>
 
     <body>
-        <h1>@yield('title')</h1>
+        <div class="container mx-auto mt-10 mb-10 max-w-lg">
+            <h1 class="text-2xl">@yield('title')</h1>
 
-        <div>
-            @if (session()->has('success'))
-                {{ session('success') }}
-            @endif
-        </div>
+            <div>
+                @if (session()->has('success'))
+                    {{ session('success') }}
+                @endif
+            </div>
 
-        <div>
-            @yield('content')
+            <div>
+                @yield('content')
+            </div>
         </div>
     </body>
 
